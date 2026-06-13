@@ -1,16 +1,19 @@
-from motor_like_arduino import ArduinoBoard
 import time
 
-with ArduinoBoard("/dev/ttyUSB0") as board:
+from motor_like_arduino import Board
 
-    motor = board.create_motor(
-        direction1=2,
-        direction2=4,
-        pwm=11
-    )
+board = Board("/dev/ttyUSB0")
 
-    motor.forward(100)
+motor = board.attach_motor(
+    2,
+    4,
+    11
+)
 
-    time.sleep(2)
+motor.forward(100)
 
-    motor.stop()
+time.sleep(2)
+
+motor.stop()
+
+board.close()
