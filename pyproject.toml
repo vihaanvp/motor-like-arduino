@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "motor-like-arduino"
+version = "0.1.0"
+description = "Arduino-style motor control using Firmata"
+authors = [
+    {name = "Vihaan Parlikar"}
+]
+dependencies = [
+    "pyfirmata2",
+    "pyserial"
+]
+requires-python = ">=3.8"
