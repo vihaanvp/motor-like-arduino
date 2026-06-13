@@ -1,34 +1,39 @@
 # motor-like-arduino
 
-Arduino-style DC motor control for Python using Firmata.
+Arduino-style DC motor control for Python.
 
-Control motors with simple, beginner-friendly commands inspired by Arduino libraries.
+Control motors connected to an Arduino running StandardFirmata using simple, intuitive commands inspired by the Arduino ecosystem.
 
 ```python
 from motor_like_arduino import Board
 
 board = Board("/dev/ttyUSB0")
 
-left_motor = board.attach_motor(2, 4, 11)
-right_motor = board.attach_motor(5, 3, 10)
+motor = board.attach_motor(2, 4, 11)
 
-left_motor.forward(50)
-right_motor.forward(100)
+motor.forward(100)
 ```
 
 ---
 
-## Features
+## Why motor-like-arduino?
 
-* Simple Arduino-inspired API
-* Control individual motors independently
-* Speed control using percentages (0–100)
-* Forward and backward movement
-* Stop and brake functionality
-* Shared board connection
-* Context manager support
-* Built on top of pyFirmata2
-* Works with Arduino boards running StandardFirmata
+Most Python motor libraries expose low-level motor driver details.
+
+motor-like-arduino focuses on simplicity:
+
+```python
+motor.forward(100)
+motor.backward(50)
+motor.stop()
+motor.brake()
+```
+
+No PWM calculations.
+
+No complicated setup.
+
+Just simple motor control.
 
 ---
 
@@ -37,14 +42,6 @@ right_motor.forward(100)
 ```bash
 pip install motor-like-arduino
 ```
-
----
-
-## Requirements
-
-* Python 3.8+
-* Arduino running StandardFirmata
-* pyFirmata2 (installed automatically)
 
 ---
 
@@ -57,15 +54,13 @@ import time
 board = Board("/dev/ttyUSB0")
 
 motor = board.attach_motor(
-    direction1=2,
-    direction2=4,
-    pwm=11
+    2,  # Direction Pin 1
+    4,  # Direction Pin 2
+    11  # PWM Pin
 )
 
 motor.forward(100)
-time.sleep(2)
 
-motor.backward(50)
 time.sleep(2)
 
 motor.stop()
@@ -75,156 +70,100 @@ board.close()
 
 ---
 
-## Dual Motor Example
+## Multiple Motors
 
 ```python
 from motor_like_arduino import Board
-import time
 
 board = Board("/dev/ttyUSB0")
 
 left_motor = board.attach_motor(
-    direction1=2,
-    direction2=4,
-    pwm=11
+    2,
+    4,
+    11
 )
 
 right_motor = board.attach_motor(
-    direction1=5,
-    direction2=3,
-    pwm=10
+    5,
+    3,
+    10
 )
 
 left_motor.forward(50)
 right_motor.forward(100)
-
-time.sleep(3)
-
-left_motor.stop()
-right_motor.stop()
-
-board.close()
 ```
 
 ---
 
-## API Reference
+## Features
 
-### Board
+* Simple Arduino-inspired API
+* Percentage-based speed control (0-100)
+* Forward and backward movement
+* Stop and brake support
+* Multiple motors per board
+* Optional TB6612FNG standby support
+* Automatic speed validation
+* Safe board shutdown
+* Context manager support
+* Custom exceptions
+* Built on top of pyFirmata2
 
-Create a connection to an Arduino running StandardFirmata.
+---
+
+## Supported Motor Drivers
+
+Any motor driver that uses:
+
+* 2 direction pins
+* 1 PWM pin
+
+Including:
+
+* TB6612FNG
+* L293D
+* L298N
+* MX1508
+
+---
+
+## Optional TB6612FNG Standby Support
 
 ```python
-board = Board("/dev/ttyUSB0")
-```
-
-### Attach a Motor
-
-```python
-motor = board.attach_motor(
-    direction1=2,
-    direction2=4,
-    pwm=11
+board = Board(
+    "/dev/ttyUSB0",
+    stby=6
 )
 ```
 
-### Motor Functions
-
-#### Move Forward
-
 ```python
-motor.forward(100)
+board.sleep()
+board.wake()
 ```
-
-#### Move Backward
-
-```python
-motor.backward(100)
-```
-
-#### Change Speed
-
-```python
-motor.set_speed(75)
-```
-
-#### Stop
-
-Allows the motor to coast to a stop.
-
-```python
-motor.stop()
-```
-
-#### Brake
-
-Actively brakes the motor for a faster stop.
-
-```python
-motor.brake()
-```
-
----
-
-## Motor Properties
-
-### Current Speed
-
-```python
-print(motor.speed)
-```
-
-### Current Direction
-
-```python
-print(motor.direction)
-```
-
-Possible values:
-
-```text
-forward
-backward
-stopped
-braked
-```
-
----
-
-## Context Manager Support
-
-```python
-from motor_like_arduino import Board
-
-with Board("/dev/ttyUSB0") as board:
-
-    motor = board.attach_motor(
-        direction1=2,
-        direction2=4,
-        pwm=11
-    )
-
-    motor.forward(100)
-```
-
-The board connection is automatically closed when the block exits.
 
 ---
 
 ## Included Examples
 
-The repository includes:
+The repository includes ready-to-run examples:
 
-* single_motor.py
-* dual_motor.py
-* tank_drive.py
-* keyboard_control.py
+* Single Motor Control
+* Dual Motor Control
+* Tank Drive
+* Keyboard Control
 
 ---
 
-## License
+## Documentation
 
-MIT License
+Complete documentation, API reference, guides, and examples are available in the project wiki.
+
+---
+
+## Requirements
+
+* Python 3.8+
+* Arduino running StandardFirmata
 
 ---
 
@@ -232,4 +171,4 @@ MIT License
 
 Vihaan Parlikar
 
-GitHub: https://github.com/vihaanvp
+---
