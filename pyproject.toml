@@ -6,11 +6,17 @@ build-backend = "setuptools.build_meta"
 name = "motor_like_arduino"
 version = "0.1.0"
 description = "Arduino-style motor control using Firmata"
+readme = "README.md"
+license = {text = "MIT"}
 authors = [
     {name = "Vihaan Parlikar"}
 ]
+keywords = ["arduino", "motor", "control", "firmata"]
 dependencies = [
     "pyfirmata2",
     "pyserial"
 ]
 requires-python = ">=3.8"
+
+[tool.setuptools.packages.find]
+where = ["src"]
