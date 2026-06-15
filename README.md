@@ -4,6 +4,8 @@ Arduino-style DC motor control for Python.
 
 Control motors connected to an Arduino running StandardFirmata using simple, intuitive commands inspired by the Arduino ecosystem.
 
+> ⚠️ NOTE: This project has been made completely using AI (ChatGPT). If any issues or security vunerabilities are found, please report in issues tab
+
 ```python
 from motor_like_arduino import Board
 
